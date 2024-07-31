@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>ค้นหาข้อมูลจากรูปภาพ</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/2.1.1/tesseract.min.js"></script>
+    <title>สแกนรูปภาพ</title>
+
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        video {
+            border: 2px solid #555;
+            margin-top: 20px;
+            display: none;
+            
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container">
+        <h1>สแกนลายผ้าไหม</h1>
+        <input type="file" id="image-input" accept="image/*">
+        <button id="scan-button">เริ่ม</button>
+        <h2>ผลลัพธ์:</h2>
+        <pre id="result"></pre>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+<body>
+    
+    <button id="startButton">ขออนุญาตเข้าถึงกล้อง</button>
+    <p id="status"></p>
+    <video id="video" width="640" height="480" autoplay></video>
+
+    <script>
+        const startButton = document.getElementById('startButton');
+        const statusText = document.getElementById('status');
+        const video = document.getElementById('video');
+
+        startButton.addEventListener('click', async () => {
+            try {
+                // ขออนุญาตเข้าถึงกล้อง
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                
+                // แสดงวิดีโอจากกล้อง
+                video.srcObject = stream;
+                video.style.display = 'block';
+                statusText.textContent = 'อนุญาตเข้าถึงกล้องเรียบร้อยแล้ว';
+            } catch (error) {
+                console.error('Error accessing camera:', error);
+                statusText.textContent = 'ไม่สามารถเข้าถึงกล้องได้: ' + error.message;
+            }
+        });
+    </script>
+</body>
+</html>
